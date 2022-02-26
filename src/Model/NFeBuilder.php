@@ -6,7 +6,7 @@ use Lucas\EmissorNotaFiscal\Helper\IssuerConfig;
 use Lucas\EmissorNotaFiscal\Helper\NFeConfig;
 use NFePHP\NFe\Make;
 
-class BuildNFe
+class NFeBuilder
 {
     private $nfe;
     private $issuerConfig;
@@ -21,19 +21,19 @@ class BuildNFe
     public function __construct(
         Make $nfe,
         IssuerConfig $issuerConfig,
-        NFeConfig $config,
-        \stdClass $values
+        NFeConfig $config
     ) {
         $this->nfe = $nfe;
         $this->issuerConfig = $issuerConfig;
         $this->config = $config;
-        $this->values = $values;
 
         $this->setTime();
     }
 
-    public function build()
+    public function build(\stdClass $values)
     {
+        $this->values = $values;
+
         $this->taginfNFe();
         $this->tagide();
         $this->tagrefNFe();
