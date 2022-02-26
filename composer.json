@@ -13,5 +13,8 @@
     ],
     "require": {
         "nfephp-org/sped-nfe": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
     }
 }
