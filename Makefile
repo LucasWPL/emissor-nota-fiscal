@@ -14,3 +14,6 @@ db:
 	docker exec -it emissor-nota-fiscal-mysql bash -c "mysql -uroot -proot"
 php:
 	docker exec -it emissor-nota-fiscal-php bash
+fix:
+	vendor/bin/php-cs-fixer fix tests
+	vendor/bin/php-cs-fixer fix src

@@ -65,7 +65,9 @@ class NFeBuilderFTest extends TestCase
             ]
         ];
         $blocos[] = $tagDest;
+
         $values = (object) array_merge(...$blocos);
+
         return array(
             array($values)
         );
