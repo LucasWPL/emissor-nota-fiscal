@@ -5,7 +5,7 @@ namespace Lucas\EmissorNotaFiscal\Helper;
 class NFeConfig
 {
     public $values;
-    private $url = "../config/config.json";
+    private $url = __DIR__ . "/../../config/settings/config.json";
 
     public function __construct()
     {

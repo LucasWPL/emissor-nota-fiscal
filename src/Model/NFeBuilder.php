@@ -42,9 +42,15 @@ class NFeBuilder
         $this->tagdest();
 
         try {
-            return $this->nfe->monta();
+            $xml = $this->nfe->monta();
+            return json_encode(array(
+                "message" => "XML criado com sucesso",
+                "data" => array(
+                    "xml" => $xml
+                ),
+            ));
         } catch (\Exception $e) {
-            return $this->nfe->getErrors();
+            throw new \Exception(implode(" | ", $this->nfe->getErrors()), 1);
         }
     }
 

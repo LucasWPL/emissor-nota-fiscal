@@ -5,7 +5,7 @@ namespace Lucas\EmissorNotaFiscal\Helper;
 class IssuerConfig
 {
     public $values;
-    private $url = "../config/issuer.config.json";
+    private $url = __DIR__ . "/../../config/settings/issuer.config.json";
 
     public function __construct()
     {
