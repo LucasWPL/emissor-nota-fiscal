@@ -1,0 +1,17 @@
+{
+    "name": "lucas/emissor-nota-fiscal",
+    "autoload": {
+        "psr-4": {
+            "Lucas\\EmissorNotaFiscal\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pedro Lucas",
+            "email": "pedro.lucaswpl@gmail.com"
+        }
+    ],
+    "require": {
+        "nfephp-org/sped-nfe": "dev-master"
+    }
+}
