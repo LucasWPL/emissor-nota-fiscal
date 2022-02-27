@@ -86,7 +86,7 @@ class NFeBuilderFTest extends TestCase
         ];
         $blocos[] = $tagDestAndEndereco;
 
-        $tagDestAndEndereco = [
+        $tagProdutos = [
             "produtos" => [
                 (object) [
                     "item" => 1,
@@ -118,7 +118,7 @@ class NFeBuilderFTest extends TestCase
                 ]
             ]
         ];
-        $blocos[] = $tagDestAndEndereco;
+        $blocos[] = $tagProdutos;
 
         $values = (object) array_merge(...$blocos);
 
