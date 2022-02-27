@@ -38,7 +38,8 @@ class NFeBuilder
 
         $this->taginfNFe();
         $this->tagide();
-        $this->tagrefNFe();
+        if ($this->values->refNFe)
+            $this->tagrefNFe();
         $this->tagemit();
         $this->tagenderEmit();
         $this->tagdest();
