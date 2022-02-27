@@ -2,6 +2,7 @@
 
 namespace Lucas\EmissorNotaFiscal\Test;
 
+use Lucas\EmissorNotaFiscal\Model\NFeBuilder;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 
 abstract class TestCase extends FrameworkTestCase
