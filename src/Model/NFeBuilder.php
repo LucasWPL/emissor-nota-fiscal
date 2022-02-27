@@ -11,6 +11,7 @@ class NFeBuilder
     private $nfe;
     private $issuerConfig;
     private $values;
+    private $pathToSave = __DIR__ . "/../../data/xml/";
 
     // valores padrões de campos
     private $dhEmi;
@@ -43,6 +44,8 @@ class NFeBuilder
 
         try {
             $xml = $this->nfe->monta();
+            $this->saveXml($xml);
+
             return json_encode(array(
                 "message" => "XML criado com sucesso",
                 "data" => array(
@@ -52,6 +55,19 @@ class NFeBuilder
         } catch (\Exception $e) {
             throw new \Exception(implode(" | ", $this->nfe->getErrors()), 1);
         }
+    }
+
+    public function alterXmlPath($url)
+    {
+        $this->pathToSave = $url;
+    }
+
+    private function saveXml($content)
+    {
+        $filename = $this->pathToSave . $this->nfe->getChave() . ".xml";
+        $file = fopen($filename, "w");
+        fwrite($file, $content);
+        fclose($file);
     }
 
     private function tagdest()

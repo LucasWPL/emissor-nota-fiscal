@@ -9,13 +9,21 @@ use function PHPUnit\Framework\assertEquals;
 
 class NFeBuilderFTest extends TestCase
 {
+    private $builder;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->builder = $this->container->get(NFeBuilder::class);
+        $this->builder->alterXmlPath(__DIR__ . "/../data/");
+    }
+
     /**
      * @dataProvider provider
      */
     public function testBuildSuccess($values)
     {
-        $builder = $this->container->get(NFeBuilder::class);
-        $result = json_decode($builder->build($values));
+        $result = json_decode($this->builder->build($values));
         assertEquals("XML criado com sucesso", $result->message);
     }
 
