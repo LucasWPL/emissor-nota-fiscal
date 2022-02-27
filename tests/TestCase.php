@@ -7,15 +7,12 @@ use PHPUnit\Framework\TestCase as FrameworkTestCase;
 
 abstract class TestCase extends FrameworkTestCase
 {
-    private $builder;
-    private $container;
-
     public function setUp(): void
     {
         parent::setUp();
-        $this->container = require_once __DIR__ . "/../config/container.config.php";
-        $this->builder = $this->container->get(NFeBuilder::class);
-        $this->builder->alterXmlPath(__DIR__ . "/../data/");
+        $this->container = require __DIR__ . "/../config/container.config.php";
+        $this->nfeBuilder = $this->container->get(NFeBuilder::class);
+        $this->nfeBuilder->alterXmlPath(__DIR__ . "/data/");
     }
 
     public function notaFiscal()

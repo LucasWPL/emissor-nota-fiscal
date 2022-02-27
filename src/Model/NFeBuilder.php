@@ -60,7 +60,9 @@ class NFeBuilder
                 ),
             ));
         } catch (\Exception $e) {
-            throw new \Exception(implode(" | ", $this->nfe->getErrors()), 1);
+            throw new \Exception(
+                $e->getMessage() . implode(" | ", $this->nfe->getErrors())
+            );
         }
     }
 
@@ -76,9 +78,7 @@ class NFeBuilder
         }
 
         $filename = $this->pathToSave . $this->nfe->getChave() . ".xml";
-        $file = fopen($filename, "w");
-        fwrite($file, $content);
-        fclose($file);
+        file_put_contents($filename, $content);
     }
 
     private function tagimposto($item, $vTotTrib)

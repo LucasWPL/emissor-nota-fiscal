@@ -2,9 +2,7 @@
 
 namespace Lucas\EmissorNotaFiscal\Helper;
 
-use Lucas\EmissorNotaFiscal\Helper\Interface\ConfigInterface;
-
-class IssuerConfig implements ConfigInterface
+class IssuerConfig
 {
     public $values;
     private $url = __DIR__ . "/../../config/settings/issuer.config.json";

@@ -2,9 +2,7 @@
 
 namespace Lucas\EmissorNotaFiscal\Helper;
 
-use Lucas\EmissorNotaFiscal\Helper\Interface\ConfigInterface;
-
-class NFeConfig implements ConfigInterface
+class NFeConfig
 {
     public $values;
     private $url = __DIR__ . "/../../config/settings/config.json";
