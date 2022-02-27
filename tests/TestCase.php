@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase as FrameworkTestCase;
 
 abstract class TestCase extends FrameworkTestCase
 {
+    private $builder;
+    private $container;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -88,13 +91,13 @@ abstract class TestCase extends FrameworkTestCase
                     "CFOP" => '6102',
                     "uCom" => "UND",
                     "qCom" => 10,
-                    "vUnCom" => 100.00,
-                    "vProd" => 120.00,
+                    "vUnCom" => 284.10,
+                    "vProd" => 2841.10,
                     "cEANTrib" => null,
                     "cBarraTrib" => null,
                     "uTrib" => 'UND',
                     "qTrib" => 10,
-                    "vUnTrib" => 100.00,
+                    "vUnTrib" => 284.11,
                     "vFrete" => null,
                     "vSeg" => null,
                     "vDesc" => null,

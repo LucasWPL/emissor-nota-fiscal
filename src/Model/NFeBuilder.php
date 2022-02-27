@@ -11,6 +11,7 @@ class NFeBuilder
     public $shouldSave = true;
     private $nfe;
     private $issuerConfig;
+    private $config;
     private $values;
     private $pathToSave = __DIR__ . "/../../data/xml/";
 
@@ -38,8 +39,9 @@ class NFeBuilder
 
         $this->taginfNFe();
         $this->tagide();
-        if ($this->values->refNFe)
+        if ($this->values->refNFe) {
             $this->tagrefNFe();
+        }
         $this->tagemit();
         $this->tagenderEmit();
         $this->tagdest();
@@ -69,12 +71,23 @@ class NFeBuilder
 
     private function saveXml($content)
     {
-        if (!$this->shouldSave) return;
+        if (!$this->shouldSave) {
+            return;
+        }
 
         $filename = $this->pathToSave . $this->nfe->getChave() . ".xml";
         $file = fopen($filename, "w");
         fwrite($file, $content);
         fclose($file);
+    }
+
+    private function tagimposto($item, $vTotTrib)
+    {
+        $std = new \stdClass();
+        $std->item = $item;
+        $std->vTotTrib = $vTotTrib;
+
+        $this->nfe->tagimposto($std);
     }
 
     private function tagprod()
@@ -107,6 +120,8 @@ class NFeBuilder
             $std->xPed = $produto->xPed;
             $std->nItemPed = $produto->nItemPed;
             $std->nFCI = $produto->nFCI;
+
+            $this->tagimposto($produto->item, $produto->vUnTrib * $produto->qTrib);
         }
 
         $this->nfe->tagprod($std);

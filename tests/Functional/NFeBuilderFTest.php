@@ -9,6 +9,7 @@ use function PHPUnit\Framework\assertEquals;
 
 class NFeBuilderFTest extends TestCase
 {
+    private $builder;
     /**
      * @dataProvider notaFiscal
      */

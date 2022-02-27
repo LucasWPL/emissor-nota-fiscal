@@ -11,6 +11,10 @@ use function PHPUnit\Framework\assertEquals;
 
 class NFeSignFTest extends TestCase
 {
+    private $nfeSign;
+    private $builder;
+    private $container;
+
     public function setUp(): void
     {
         parent::setUp();

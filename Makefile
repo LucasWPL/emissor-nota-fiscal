@@ -17,3 +17,5 @@ php:
 fix:
 	vendor/bin/php-cs-fixer fix tests
 	vendor/bin/php-cs-fixer fix src
+static:
+	vendor/bin/psalm --no-cache

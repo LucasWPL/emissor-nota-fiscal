@@ -8,6 +8,10 @@ use NFePHP\NFe\Common\Tools;
 
 class NFeSign
 {
+    private $tools;
+    private $issuerConfig;
+    private $config;
+
     public function __construct(
         Tools $tools,
         IssuerConfig $issuerConfig,
