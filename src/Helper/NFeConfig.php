@@ -12,9 +12,14 @@ class NFeConfig
         $this->getFileInfos();
     }
 
+    public function getFileContents()
+    {
+        return file_get_contents($this->url);
+    }
+
     private function getFileInfos()
     {
-        $json = file_get_contents($this->url);
+        $json = $this->getFileContents();
         $this->values = json_decode($json);
     }
 }

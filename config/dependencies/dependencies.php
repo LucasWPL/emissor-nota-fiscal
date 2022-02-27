@@ -16,10 +16,15 @@ return [
         return new NFeBuilder($make, $c->get(IssuerConfig::class), $c->get(NFeConfig::class));
     },
     NFeSign::class => function (ContainerInterface $c) {
-        $certificate = Certificate::readPfx($c->get('cert.url'), $c->get('cert.pass'));
-        $tools = new Tools($c->get(NFeConfig::class), $certificate);
+        $tools = new Tools($c->get(NFeConfig::class)->getFileContents(), $c->get('certificate'));
 
         return new NFeSign($tools, $c->get(IssuerConfig::class), $c->get(NFeConfig::class));
+    },
+    'certificate' => function (ContainerInterface $c) {
+        $certificateFIle = file_get_contents($c->get('cert.url'));
+        $certificate = Certificate::readPfx($certificateFIle, $c->get('cert.pass'));
+
+        return $certificate;
     },
     IssuerConfig::class => function (ContainerInterface $c) {
         return new IssuerConfig();

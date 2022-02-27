@@ -2,6 +2,6 @@
 
 return [
     // certificado
-    'cert.url' => __DIR__ . '/../../certificado.pfx',
+    'cert.url' => __DIR__ . '/../cert/certificado.pfx',
     'cert.pass' => '1234',
 ];

@@ -8,6 +8,7 @@ use NFePHP\NFe\Make;
 
 class NFeBuilder
 {
+    public $shouldSave = true;
     private $nfe;
     private $issuerConfig;
     private $values;
@@ -67,6 +68,8 @@ class NFeBuilder
 
     private function saveXml($content)
     {
+        if (!$this->shouldSave) return;
+
         $filename = $this->pathToSave . $this->nfe->getChave() . ".xml";
         $file = fopen($filename, "w");
         fwrite($file, $content);

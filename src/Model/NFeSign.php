@@ -17,4 +17,9 @@ class NFeSign
         $this->issuerConfig = $issuerConfig;
         $this->config = $config;
     }
+
+    public function sign($xml)
+    {
+        $this->tools->signNFe($xml);
+    }
 }
