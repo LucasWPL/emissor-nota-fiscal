@@ -41,6 +41,9 @@ class NFeBuilder
         $this->tagemit();
         $this->tagenderEmit();
         $this->tagdest();
+        $this->tagenderDest();
+        $this->tagautXML();
+        $this->tagprod();
 
         try {
             $xml = $this->nfe->monta();
@@ -68,6 +71,73 @@ class NFeBuilder
         $file = fopen($filename, "w");
         fwrite($file, $content);
         fclose($file);
+    }
+
+    private function tagprod()
+    {
+        foreach ($this->values->produtos as $produto) {
+            $std = new \stdClass();
+            $std->item = $produto->item;
+            $std->cProd = $produto->cProd;
+            $std->cEAN = $produto->cEAN;
+            $std->cBarra = $produto->cBarra;
+            $std->xProd = $produto->xProd;
+            $std->NCM = $produto->NCM;
+            $std->cBenef = $produto->cBenef;
+            $std->EXTIPI = $produto->EXTIPI;
+            $std->CFOP = $produto->CFOP;
+            $std->uCom = $produto->uCom;
+            $std->qCom = $produto->qCom;
+            $std->vUnCom = $produto->vUnCom;
+            $std->vProd = $produto->vProd;
+            $std->cEANTrib = $produto->cEANTrib;
+            $std->cBarraTrib = $produto->cBarraTrib;
+            $std->uTrib = $produto->uTrib;
+            $std->qTrib = $produto->qTrib;
+            $std->vUnTrib = $produto->vUnTrib;
+            $std->vFrete = $produto->vFrete;
+            $std->vSeg = $produto->vSeg;
+            $std->vDesc = $produto->vDesc;
+            $std->vOutro = $produto->vOutro;
+            $std->indTot = $produto->indTot;
+            $std->xPed = $produto->xPed;
+            $std->nItemPed = $produto->nItemPed;
+            $std->nFCI = $produto->nFCI;
+        }
+
+        $this->nfe->tagprod($std);
+    }
+
+    private function tagautXML()
+    {
+        $std = new \stdClass();
+        if (strlen($this->issuerConfig->values->CNPJ) == 11) {
+            $std->CPF = $this->values->dest->CNPJ;
+            $std->CNPJ = null;
+        } else {
+            $std->CNPJ = $this->values->dest->CNPJ;
+            $std->CPF = null;
+        }
+
+        $this->nfe->tagautXML($std);
+    }
+
+    private function tagenderDest()
+    {
+        $std = new \stdClass();
+        $std->xLgr = $this->values->dest->xLgr;
+        $std->nro = $this->values->dest->nro;
+        $std->xCpl = $this->values->dest->xCpl;
+        $std->xBairro = $this->values->dest->xBairro;
+        $std->cMun = $this->values->dest->cMun;
+        $std->xMun = $this->values->dest->xMun;
+        $std->UF = $this->values->dest->UF;
+        $std->CEP = $this->values->dest->CEP;
+        $std->cPais = $this->values->dest->cPais;
+        $std->xPais = $this->values->dest->xPais;
+        $std->fone = $this->values->dest->fone;
+
+        $this->nfe->tagenderDest($std);
     }
 
     private function tagdest()
