@@ -108,6 +108,21 @@ abstract class TestCase extends FrameworkTestCase
         ];
         $blocos[] = $tagProdutos;
 
+        $tagProdutos = [
+            "icms" => [
+                1 => (object) [
+                    "item" => 1,
+                    "vBC" => 2841.10, //total produto
+                    "pICMS" => 12, // percentual sob o vBC
+                    "vICMS" => 340.932,
+                    "CST" => "00",
+                    "orig" => "0",
+                    "modBC" => "0",
+                ]
+            ]
+        ];
+        $blocos[] = $tagProdutos;
+
         $values = (object) array_merge(...$blocos);
 
         return array(
