@@ -4,6 +4,7 @@ namespace Lucas\EmissorNotaFiscal\Test;
 
 use Lucas\EmissorNotaFiscal\Helper\JsonResponser;
 use Lucas\EmissorNotaFiscal\Model\NFeBuilder;
+use Lucas\EmissorNotaFiscal\Model\NFeRequestAuthorization;
 use Lucas\EmissorNotaFiscal\Model\NFeSign;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 
@@ -18,7 +19,10 @@ abstract class TestCase extends FrameworkTestCase
         $this->nfeBuilder->alterXmlPath(__DIR__ . "/data/xml/pendentes/");
 
         $this->nfeSign = $this->container->get(NFeSign::class);
-        $this->nfeSign->alterXmlPath(__DIR__ . "/data/xml/assinados/");
+        $this->nfeSign->alterXmlPath(__DIR__ . "/data/xml/assinadas/");
+
+        $this->nfeAuthorization = $this->container->get(NFeRequestAuthorization::class);
+        $this->nfeAuthorization->alterXmlPath(__DIR__ . "/data/xml/enviadas/");
     }
 
     public function notaFiscal()

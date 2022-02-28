@@ -83,7 +83,7 @@ class NFeBuilder implements XmlBuilderInterface
             return;
         }
 
-        $filename = $this->pathToSave . "NFe-" .  $this->nfe->getChave() . ".xml";
+        $filename = $this->pathToSave . "nfe-" .  $this->nfe->getChave() . ".xml";
         file_put_contents($filename, $content);
     }
 

@@ -3,9 +3,10 @@
 use Lucas\EmissorNotaFiscal\Helper\IssuerConfig;
 use Lucas\EmissorNotaFiscal\Helper\NFeConfig;
 use Lucas\EmissorNotaFiscal\Model\NFeBuilder;
+use Lucas\EmissorNotaFiscal\Model\NFeRequestAuthorization;
 use Lucas\EmissorNotaFiscal\Model\NFeSign;
 use NFePHP\Common\Certificate;
-use NFePHP\NFe\Common\Tools;
+use NFePHP\NFe\Tools;
 use NFePHP\NFe\Make;
 use Psr\Container\ContainerInterface;
 
@@ -19,6 +20,11 @@ return [
         $tools = new Tools($c->get(NFeConfig::class)->getFileContents(), $c->get('certificate'));
 
         return new NFeSign($tools);
+    },
+    NFeRequestAuthorization::class => function (ContainerInterface $c) {
+        $tools = new Tools($c->get(NFeConfig::class)->getFileContents(), $c->get('certificate'));
+
+        return new NFeRequestAuthorization($tools);
     },
     'certificate' => function (ContainerInterface $c) {
         $certificateFIle = file_get_contents($c->get('cert.url'));
