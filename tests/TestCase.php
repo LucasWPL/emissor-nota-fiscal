@@ -50,7 +50,7 @@ abstract class TestCase extends FrameworkTestCase
         $blocos[] = $tagRefNfe;
 
         $tagDestAndEndereco = [
-            "dest" => (object) [
+            "dest" => [
                 'xNome' => "Comprador LTDA",
                 'indIEDest' => "2",
                 'IE' => null,
@@ -76,7 +76,7 @@ abstract class TestCase extends FrameworkTestCase
 
         $tagProdutos = [
             "produtos" => [
-                (object) [
+                [
                     "item" => 1,
                     "cProd" => "010203",
                     "cEAN" => null,
@@ -108,9 +108,9 @@ abstract class TestCase extends FrameworkTestCase
         ];
         $blocos[] = $tagProdutos;
 
-        $tagProdutos = [
+        $tagICMS = [
             "icms" => [
-                1 => (object) [
+                1 => [
                     "item" => 1,
                     "vBC" => 2841.10, //total produto
                     "pICMS" => 12, // percentual sob o vBC
@@ -121,12 +121,33 @@ abstract class TestCase extends FrameworkTestCase
                 ]
             ]
         ];
-        $blocos[] = $tagProdutos;
+        $blocos[] = $tagICMS;
 
-        $values = (object) array_merge(...$blocos);
+        $tagPag = [
+            "pag" => [
+                "vTroco" => null,
+            ]
+        ];
+        $blocos[] = $tagPag;
+
+        $tagDetPag = [
+            "detPag" => [
+                "indPag" => 0,
+                "tPag" => "03",
+                "vPag" => 2841.10,
+            ]
+        ];
+        $blocos[] = $tagDetPag;
+
+        $values = $this->toJson(array_merge(...$blocos));
 
         return array(
             array($values)
         );
+    }
+
+    private function toJson($array)
+    {
+        return json_decode(json_encode($array));
     }
 }

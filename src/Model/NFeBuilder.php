@@ -49,6 +49,8 @@ class NFeBuilder
         $this->tagenderDest();
         $this->tagautXML();
         $this->tagprod();
+        $this->tagpag();
+        $this->tagdetPag();
 
         try {
             $xml = $this->nfe->monta();
@@ -82,6 +84,28 @@ class NFeBuilder
         file_put_contents($filename, $content);
     }
 
+    private function tagpag()
+    {
+        $std = new \stdClass();
+        $std->tPag = $this->values->pag->vTroco;
+
+        $this->nfe->tagpag($std);
+    }
+
+    private function tagdetPag()
+    {
+        $std = new \stdClass();
+        $std->tPag = $this->values->detPag->tPag;
+        $std->vPag = $this->values->detPag->vPag;
+        $std->CNPJ = $this->values->detPag->CNPJ;
+        $std->tBand = $this->values->detPag->tBand;
+        $std->cAut = $this->values->detPag->cAut;
+        $std->tpIntegra = $this->values->detPag->tpIntegra;
+        $std->indPag = $this->values->detPag->indPag;
+
+        $this->nfe->tagdetPag($std);
+    }
+
     private function tagtransp()
     {
         $std = new \stdClass();
@@ -89,50 +113,51 @@ class NFeBuilder
 
         $this->nfe->tagtransp($std);
     }
+
     private function tagicms($item)
     {
         $std = new \stdClass();
-        $std->item = $this->values->icms[$item]->item;
-        $std->orig = $this->values->icms[$item]->orig;
-        $std->CST = $this->values->icms[$item]->CST;
-        $std->modBC = $this->values->icms[$item]->modBC;
-        $std->vBC = $this->values->icms[$item]->vBC;
-        $std->pICMS = $this->values->icms[$item]->pICMS;
-        $std->vICMS = $this->values->icms[$item]->vICMS;
-        $std->pFCP = $this->values->icms[$item]->pFCP;
-        $std->vFCP = $this->values->icms[$item]->vFCP;
-        $std->vBCFCP = $this->values->icms[$item]->vBCFCP;
-        $std->modBCST = $this->values->icms[$item]->modBCST;
-        $std->pMVAST = $this->values->icms[$item]->pMVAST;
-        $std->pRedBCST = $this->values->icms[$item]->pRedBCST;
-        $std->vBCST = $this->values->icms[$item]->vBCST;
-        $std->pICMSST = $this->values->icms[$item]->pICMSST;
-        $std->vICMSST = $this->values->icms[$item]->vICMSST;
-        $std->vBCFCPST = $this->values->icms[$item]->vBCFCPST;
-        $std->pFCPST = $this->values->icms[$item]->pFCPST;
-        $std->vFCPST = $this->values->icms[$item]->vFCPST;
-        $std->vICMSDeson = $this->values->icms[$item]->vICMSDeson;
-        $std->motDesICMS = $this->values->icms[$item]->motDesICMS;
-        $std->pRedBC = $this->values->icms[$item]->pRedBC;
-        $std->vICMSOp = $this->values->icms[$item]->vICMSOp;
-        $std->pDif = $this->values->icms[$item]->pDif;
-        $std->vICMSDif = $this->values->icms[$item]->vICMSDif;
-        $std->vBCSTRet = $this->values->icms[$item]->vBCSTRet;
-        $std->pST = $this->values->icms[$item]->pST;
-        $std->vICMSSTRet = $this->values->icms[$item]->vICMSSTRet;
-        $std->vBCFCPSTRet = $this->values->icms[$item]->vBCFCPSTRet;
-        $std->pFCPSTRet = $this->values->icms[$item]->pFCPSTRet;
-        $std->vFCPSTRet = $this->values->icms[$item]->vFCPSTRet;
-        $std->pRedBCEfet = $this->values->icms[$item]->pRedBCEfet;
-        $std->vBCEfet = $this->values->icms[$item]->vBCEfet;
-        $std->pICMSEfet = $this->values->icms[$item]->pICMSEfet;
-        $std->vICMSEfet = $this->values->icms[$item]->vICMSEfet;
-        $std->vICMSSubstituto = $this->values->icms[$item]->vICMSSubstituto;
-        $std->vICMSSTDeson = $this->values->icms[$item]->vICMSSTDeson;
-        $std->motDesICMSST = $this->values->icms[$item]->motDesICMSST;
-        $std->pFCPDif = $this->values->icms[$item]->pFCPDif;
-        $std->vFCPDif = $this->values->icms[$item]->vFCPDif;
-        $std->vFCPEfet = $this->values->icms[$item]->vFCPEfet;
+        $std->item = $this->values->icms->{$item}->item;
+        $std->orig = $this->values->icms->{$item}->orig;
+        $std->CST = $this->values->icms->{$item}->CST;
+        $std->modBC = $this->values->icms->{$item}->modBC;
+        $std->vBC = $this->values->icms->{$item}->vBC;
+        $std->pICMS = $this->values->icms->{$item}->pICMS;
+        $std->vICMS = $this->values->icms->{$item}->vICMS;
+        $std->pFCP = $this->values->icms->{$item}->pFCP;
+        $std->vFCP = $this->values->icms->{$item}->vFCP;
+        $std->vBCFCP = $this->values->icms->{$item}->vBCFCP;
+        $std->modBCST = $this->values->icms->{$item}->modBCST;
+        $std->pMVAST = $this->values->icms->{$item}->pMVAST;
+        $std->pRedBCST = $this->values->icms->{$item}->pRedBCST;
+        $std->vBCST = $this->values->icms->{$item}->vBCST;
+        $std->pICMSST = $this->values->icms->{$item}->pICMSST;
+        $std->vICMSST = $this->values->icms->{$item}->vICMSST;
+        $std->vBCFCPST = $this->values->icms->{$item}->vBCFCPST;
+        $std->pFCPST = $this->values->icms->{$item}->pFCPST;
+        $std->vFCPST = $this->values->icms->{$item}->vFCPST;
+        $std->vICMSDeson = $this->values->icms->{$item}->vICMSDeson;
+        $std->motDesICMS = $this->values->icms->{$item}->motDesICMS;
+        $std->pRedBC = $this->values->icms->{$item}->pRedBC;
+        $std->vICMSOp = $this->values->icms->{$item}->vICMSOp;
+        $std->pDif = $this->values->icms->{$item}->pDif;
+        $std->vICMSDif = $this->values->icms->{$item}->vICMSDif;
+        $std->vBCSTRet = $this->values->icms->{$item}->vBCSTRet;
+        $std->pST = $this->values->icms->{$item}->pST;
+        $std->vICMSSTRet = $this->values->icms->{$item}->vICMSSTRet;
+        $std->vBCFCPSTRet = $this->values->icms->{$item}->vBCFCPSTRet;
+        $std->pFCPSTRet = $this->values->icms->{$item}->pFCPSTRet;
+        $std->vFCPSTRet = $this->values->icms->{$item}->vFCPSTRet;
+        $std->pRedBCEfet = $this->values->icms->{$item}->pRedBCEfet;
+        $std->vBCEfet = $this->values->icms->{$item}->vBCEfet;
+        $std->pICMSEfet = $this->values->icms->{$item}->pICMSEfet;
+        $std->vICMSEfet = $this->values->icms->{$item}->vICMSEfet;
+        $std->vICMSSubstituto = $this->values->icms->{$item}->vICMSSubstituto;
+        $std->vICMSSTDeson = $this->values->icms->{$item}->vICMSSTDeson;
+        $std->motDesICMSST = $this->values->icms->{$item}->motDesICMSST;
+        $std->pFCPDif = $this->values->icms->{$item}->pFCPDif;
+        $std->vFCPDif = $this->values->icms->{$item}->vFCPDif;
+        $std->vFCPEfet = $this->values->icms->{$item}->vFCPEfet;
 
         $this->nfe->tagICMS($std);
     }

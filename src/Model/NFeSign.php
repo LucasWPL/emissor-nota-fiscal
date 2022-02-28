@@ -24,6 +24,6 @@ class NFeSign
 
     public function sign($xml)
     {
-        $this->tools->signNFe($xml);
+        return $this->tools->signNFe($xml);
     }
 }
