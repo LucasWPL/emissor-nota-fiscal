@@ -2,28 +2,54 @@
 
 namespace Lucas\EmissorNotaFiscal\Model;
 
-use Lucas\EmissorNotaFiscal\Helper\IssuerConfig;
-use Lucas\EmissorNotaFiscal\Helper\NFeConfig;
+use Lucas\EmissorNotaFiscal\Helper\JsonResponser;
 use NFePHP\NFe\Common\Tools;
 
-class NFeSign
+class NFeSign implements XmlBuilderInterface
 {
     private $tools;
-    private $issuerConfig;
-    private $config;
+    private $chave;
+    public $shouldSave = true;
+    private $pathToSave = __DIR__ . "/../../data/xml/assinados/";
 
     public function __construct(
-        Tools $tools,
-        IssuerConfig $issuerConfig,
-        NFeConfig $config
+        Tools $tools
     ) {
         $this->tools = $tools;
-        $this->issuerConfig = $issuerConfig;
-        $this->config = $config;
     }
 
-    public function sign($xml)
+    public function sign($xml, $chave)
     {
-        return $this->tools->signNFe($xml);
+        $this->chave = $chave;
+
+        try {
+            $xml = $this->tools->signNFe($xml);
+            $this->saveXml($xml);
+
+            return JsonResponser::toJson(array(
+                "message" => "XML assinado com sucesso",
+                "data" => array(
+                    "xml" => $xml,
+                    "chave" => $this->chave,
+                ),
+            ));
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function saveXml($content)
+    {
+        if (!$this->shouldSave) {
+            return;
+        }
+
+        $filename = $this->pathToSave . "nfe-assinada-" . $this->chave . ".xml";
+        file_put_contents($filename, $content);
+    }
+
+    public function alterXmlPath($url)
+    {
+        $this->pathToSave = $url;
     }
 }

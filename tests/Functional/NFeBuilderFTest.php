@@ -13,7 +13,7 @@ class NFeBuilderFTest extends TestCase
      */
     public function testBuildSuccess($values)
     {
-        $result = json_decode($this->nfeBuilder->build($values));
+        $result = $this->nfeBuilder->build($values);
         assertEquals("XML criado com sucesso", $result->message);
     }
 }

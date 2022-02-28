@@ -2,7 +2,9 @@
 
 namespace Lucas\EmissorNotaFiscal\Test;
 
+use Lucas\EmissorNotaFiscal\Helper\JsonResponser;
 use Lucas\EmissorNotaFiscal\Model\NFeBuilder;
+use Lucas\EmissorNotaFiscal\Model\NFeSign;
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 
 abstract class TestCase extends FrameworkTestCase
@@ -11,8 +13,12 @@ abstract class TestCase extends FrameworkTestCase
     {
         parent::setUp();
         $this->container = require __DIR__ . "/../config/container.config.php";
+
         $this->nfeBuilder = $this->container->get(NFeBuilder::class);
-        $this->nfeBuilder->alterXmlPath(__DIR__ . "/data/");
+        $this->nfeBuilder->alterXmlPath(__DIR__ . "/data/xml/pendentes/");
+
+        $this->nfeSign = $this->container->get(NFeSign::class);
+        $this->nfeSign->alterXmlPath(__DIR__ . "/data/xml/assinados/");
     }
 
     public function notaFiscal()
@@ -139,15 +145,10 @@ abstract class TestCase extends FrameworkTestCase
         ];
         $blocos[] = $tagDetPag;
 
-        $values = $this->toJson(array_merge(...$blocos));
+        $values = JsonResponser::toJson(array_merge(...$blocos));
 
         return array(
             array($values)
         );
-    }
-
-    private function toJson($array)
-    {
-        return json_decode(json_encode($array));
     }
 }

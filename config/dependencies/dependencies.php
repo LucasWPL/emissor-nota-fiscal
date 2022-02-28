@@ -18,7 +18,7 @@ return [
     NFeSign::class => function (ContainerInterface $c) {
         $tools = new Tools($c->get(NFeConfig::class)->getFileContents(), $c->get('certificate'));
 
-        return new NFeSign($tools, $c->get(IssuerConfig::class), $c->get(NFeConfig::class));
+        return new NFeSign($tools);
     },
     'certificate' => function (ContainerInterface $c) {
         $certificateFIle = file_get_contents($c->get('cert.url'));

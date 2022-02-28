@@ -3,17 +3,19 @@
 namespace Lucas\EmissorNotaFiscal\Model;
 
 use Lucas\EmissorNotaFiscal\Helper\IssuerConfig;
+use Lucas\EmissorNotaFiscal\Helper\JsonResponser;
 use Lucas\EmissorNotaFiscal\Helper\NFeConfig;
+use Lucas\EmissorNotaFiscal\Model\XmlBuilderInterface;
 use NFePHP\NFe\Make;
 
-class NFeBuilder
+class NFeBuilder implements XmlBuilderInterface
 {
     public $shouldSave = true;
     private $nfe;
     private $issuerConfig;
     private $config;
     private $values;
-    private $pathToSave = __DIR__ . "/../../data/xml/";
+    private $pathToSave = __DIR__ . "/../../data/xml/pendentes/";
 
     // valores padrões de campos
     private $dhEmi;
@@ -56,10 +58,11 @@ class NFeBuilder
             $xml = $this->nfe->monta();
             $this->saveXml($xml);
 
-            return json_encode(array(
+            return JsonResponser::toJson(array(
                 "message" => "XML criado com sucesso",
                 "data" => array(
-                    "xml" => $xml
+                    "xml" => $xml,
+                    "chave" => $this->nfe->getChave(),
                 ),
             ));
         } catch (\Exception $e) {
@@ -74,13 +77,13 @@ class NFeBuilder
         $this->pathToSave = $url;
     }
 
-    private function saveXml($content)
+    public function saveXml($content)
     {
         if (!$this->shouldSave) {
             return;
         }
 
-        $filename = $this->pathToSave . $this->nfe->getChave() . ".xml";
+        $filename = $this->pathToSave . "NFe-" .  $this->nfe->getChave() . ".xml";
         file_put_contents($filename, $content);
     }
 
